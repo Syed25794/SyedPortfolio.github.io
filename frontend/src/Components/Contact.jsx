@@ -6,10 +6,13 @@ import {
   Icon,
   Input,
   Text,
+  Spinner,
+  Alert
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { VscDebugDisconnect } from "react-icons/vsc";
 import { Element } from "react-scroll";
+import axios from 'axios';
 
 export const Contact = () => {
   const [state, setState] = useState({
@@ -17,7 +20,49 @@ export const Contact = () => {
     email: "",
     message: "",
   });
-  const handleInputs = () => {
+  const [isLoading,setIsLoading]=useState(false);
+  // const [flags,setFlags]=useState({
+  //   isLoading:false,
+  //   isName:false,
+  //   isEmail:false,
+  //   isMessage:false
+  // });
+  const handleInputs = async () => {
+    setIsLoading(true);
+    const message = state;
+    // if( message.name === "" ){
+    //   // setFlags({...flags, isName:true});
+    // }
+    // if( message.email === "" ){
+    //   // setFlags({...flags, isEmail:true});
+    // }
+    // if( message.message === "" ){
+    //   // setFlags({...flags,isMessage:true});
+    // }
+
+    try {
+      axios({
+        method: 'post',
+        url: 'https://messageapi-8t04.onrender.com/message/create',
+        data: {
+          message
+        }
+      }).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)});
+      
+      // let res = fetch("https://messageapi-8t04.onrender.com/message/create",{
+      //   method:"POST",
+      //   mode:"no-cors",
+      //   headers:{"Content-Type":"application/json"},
+      //   body:JSON.stringify(message)
+      // })
+      // .then((res)=>{res.json()})
+      // .then((d)=>{console.log(d);setIsLoading(false)})
+      // .catch((err)=>{console.log(err)})
+      // setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
     setState({
       name: "",
       email: "",
@@ -56,6 +101,7 @@ export const Contact = () => {
           <Box p={5}>
             <Text marginBottom={2}>Name</Text>
             <Input
+              isRequired
               name="name"
               value={state.name}
               onChange={handleChange}
@@ -89,6 +135,7 @@ export const Contact = () => {
               color="white"
             >
               Connect With Me
+              { isLoading ? <Spinner m={4} /> : null }
             </Button>
           </Box>
         </Box>

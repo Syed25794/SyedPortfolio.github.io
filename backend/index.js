@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/message",messageRouter);
 
 app.get("/",(req,res)=>{
-    res.send("<>Welcome to Home page.</>");
+    res.send("<h1>Welcome to Home page.</h1>");
 });
 
 require("dotenv").config();

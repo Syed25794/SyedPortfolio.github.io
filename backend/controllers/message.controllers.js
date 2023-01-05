@@ -1,9 +1,9 @@
-import Message from "../models/message.models";
+const  Message = require("../models/message.models");
 
-export const postMessage = async ( req, res )=>{
+const postMessage = async ( req, res )=>{
     const { name, email, message } = req.body;
     try {
-        const payload = new Message({
+        const payload = new messageRouter({
         name,
         email,
         message
@@ -14,4 +14,6 @@ export const postMessage = async ( req, res )=>{
         res.status(404).json({"error":error});
     }
 }
+
+module.exports= postMessage;
 

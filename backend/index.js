@@ -1,10 +1,15 @@
 const express = require("express");
+const connection = require("./config/database");
 
-// const messageRouter = require("./routes/message.routes");
+const messageRouter = require("./routes/message.routes");
+
 
 const app = express();
 
-// app.use("/message",messageRouter);
+app.use(express.json());
+
+app.use("/message",messageRouter);
+
 app.get("/",(req,res)=>{
     res.send("<>Welcome to Home page.</>");
 });
@@ -18,6 +23,8 @@ console.log(PORT);
 app.listen(8080,async()=>{
     try{
         console.log(`Server is running on localhost port : ${PORT}`);
+        connection;
+        console.log("Connected with database");
     }catch(error){
         if( error ){
             console.log("Something went wrong with connecting database...");

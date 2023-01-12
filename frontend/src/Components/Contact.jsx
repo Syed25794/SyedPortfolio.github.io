@@ -131,7 +131,6 @@ export const Contact = () => {
           <Box
             marginLeft={["45px", "35px", "55px"]}
             alignItems="center"
-            border="1px solid red"
           >
             {flags.isLoading ? (
               <Spinner m={4} />
